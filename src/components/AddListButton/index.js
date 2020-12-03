@@ -21,7 +21,7 @@ const AddListButton = () => {
         <div className="add-list">
           <div className="add-list__popup">
             <input type="text" placeholder="Название списка" className="form-control" />
-            <button className="btn font_14">Добавить</button>
+            <button className="btn font_14 add-list__popup-btn">Добавить</button>
           </div>
         </div>
       )}

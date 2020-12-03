@@ -16,7 +16,7 @@
 
   /*base color 3*/
   --lightness-color: 57%;
-  --lightness-color2: 77%;
+  --lightness-color2: 47%;
 
   --color-base-green: hsl(var(--base-color1), var(--saturation-color), var(--lightness-color));
   --color-base-green-hover: hsl(var(--base-color1), var(--saturation-color), var(--lightness-color2));
@@ -67,7 +67,7 @@ body {
   width: 100%;
 
   &:focus {
-    border-color: #f5f5f5;
+    border-color: #ddd;
   }
 }
 
@@ -86,6 +86,8 @@ body {
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
+  color: #fff;
+  transition: all ease 0.3s;
 
   &:hover {
     background: var(--color-base-green-hover);

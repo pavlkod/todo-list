@@ -5,5 +5,10 @@
     border-radius: calc(var(--border-radius) * 2);
     padding: 15px;
     width: 240px;
+
+    &-btn {
+      margin-top: 13px;
+      width: 100%;
+    }
   }
 }

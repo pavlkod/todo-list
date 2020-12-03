@@ -9,8 +9,8 @@
     &:hover {
       cursor: pointer;
 
-      svg path {
-        stroke: #333;
+      i {
+        opacity: 1;
       }
     }
 
@@ -23,6 +23,8 @@
     &-icon {
       line-height: 0px;
       margin-right: 10px;
+      opacity: 0.7;
+      transition: opacity ease 0.3s;
     }
   }
 }
