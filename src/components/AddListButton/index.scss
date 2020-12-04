@@ -10,5 +10,21 @@
       margin-top: 13px;
       width: 100%;
     }
+
+    &-colors {
+      margin: 13px 0px 0px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .badge {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+
+      &--active {
+        border: 2px solid #525252;
+      }
+    }
   }
 }

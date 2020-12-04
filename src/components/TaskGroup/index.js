@@ -3,6 +3,7 @@ import classnames from "classnames";
 
 import "./index.scss";
 import removeSvg from "../../assets/img/remove.svg";
+import Badge from "../Badge";
 
 const TaskGroup = ({ items, removable, showPopup }) => {
   if (!items.length) {
@@ -13,7 +14,6 @@ const TaskGroup = ({ items, removable, showPopup }) => {
     console.log(123);
     showPopup();
   };
-
   return (
     <ul className="task-group" onClick={showPopupHandler}>
       {items.map(task => {
@@ -22,9 +22,7 @@ const TaskGroup = ({ items, removable, showPopup }) => {
             className={classnames(task.className, "task-group__item", { "task-group__item--active": task.active })}
             key={task.label}
           >
-            <i className="task-group__item-icon">
-              {task.icon ? task.icon : <span className={`badge badge--${task.color}`}></span>}
-            </i>
+            <i className="task-group__item-icon">{task.icon ? task.icon : <Badge color={task.color} />}</i>
             <span>{task.label}</span>
             {removable && (
               <span className="task-group__item-remove">

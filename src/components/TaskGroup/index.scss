@@ -1,5 +1,10 @@
 .task-group {
   margin-bottom: 30px;
+
+  &:last-of-type {
+    margin-bottom: 0px;
+  }
+
   &__item {
     display: flex;
     align-items: center;
@@ -26,27 +31,5 @@
       opacity: 0.7;
       transition: opacity ease 0.3s;
     }
-  }
-}
-.badge {
-  width: 10px;
-  height: 10px;
-  display: block;
-  border-radius: 10px;
-
-  &--dark-green {
-    background-color: #42b883;
-  }
-  &--blue {
-    background-color: #64c4ed;
-  }
-  &--pink {
-    background-color: #ffbbcc;
-  }
-  &--green {
-    background-color: #b6e6bd;
-  }
-  &--grey {
-    background-color: #c9d1d3;
   }
 }

@@ -8,18 +8,17 @@
 }
 :root {
   --border-radius: 5px;
-  /* base color 1 */
-  --base-color1: 154;
 
-  /* base color 2 */
+  --hue-color: 154;
   --saturation-color: 62%;
 
-  /*base color 3*/
   --lightness-color: 57%;
   --lightness-color2: 47%;
+  --lightness-color3: 37%;
 
-  --color-base-green: hsl(var(--base-color1), var(--saturation-color), var(--lightness-color));
-  --color-base-green-hover: hsl(var(--base-color1), var(--saturation-color), var(--lightness-color2));
+  --color-base-green: hsl(var(--hue-color), var(--saturation-color), var(--lightness-color));
+  --color-base-green-hover: hsl(var(--hue-color), var(--saturation-color), var(--lightness-color2));
+  --color-base-green-active: hsl(var(--hue-color), var(--saturation-color), var(--lightness-color3));
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
@@ -91,5 +90,8 @@ body {
 
   &:hover {
     background: var(--color-base-green-hover);
+  }
+  &:active {
+    background: var(--color-base-green-active);
   }
 }

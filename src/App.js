@@ -3,6 +3,8 @@ import TaskGroup from "./components/TaskGroup";
 import { ReactComponent as ListSvg } from "./assets/img/list.svg";
 import { AddListButton } from "./components/AddListButton";
 
+import DB from "./assets/db.json";
+
 function App() {
   const allTasks = [
     {
@@ -24,7 +26,7 @@ function App() {
       <div className="todo__sidebar">
         <TaskGroup items={allTasks} />
         <TaskGroup items={tasks} removable />
-        <AddListButton />
+        <AddListButton colors={DB.colors} />
       </div>
       <div className="todo_tasks"></div>
     </div>
