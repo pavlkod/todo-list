@@ -9,6 +9,7 @@ import { ReactComponent as ListSvg } from "./assets/img/list.svg";
 import { AddListButton } from "./components/AddListButton";
 
 import { formatArray } from "./utils";
+import Tasks from "./components/Tasks";
 
 function App() {
   const [tasks, setTasks] = useState(() => formatArray(DB.lists, DB.colors));
@@ -39,7 +40,9 @@ function App() {
         <TaskGroup items={tasks} removable topAlign removeTask={removeTaskHandler} />
         <AddListButton colors={DB.colors} addTask={addTaskHandler} />
       </div>
-      <div className="todo_tasks"></div>
+      <div className="todo__tasks">
+        <Tasks title="Фронтенд" />
+      </div>
     </div>
   );
 }

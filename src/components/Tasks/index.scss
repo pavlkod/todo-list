@@ -1,0 +1,87 @@
+.tasks {
+  &__title {
+    $title: &;
+    display: flex;
+    font-size: 2em;
+    font-family: Montserrat, sans-serif;
+    padding-bottom: 0.625em;
+    border-bottom: 1px solid #f2f2f2;
+
+    &:hover {
+      #{$title}-icon {
+        opacity: 0.3;
+      }
+    }
+
+    &-icon {
+      width: 20px;
+      text-align: center;
+      opacity: 0;
+      margin-left: 10px;
+
+      #{$title} &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__item {
+    $item: &;
+    margin-top: 10px;
+
+    &-checkbox {
+      display: none;
+    }
+
+    label {
+      position: relative;
+      padding-left: 35px;
+      cursor: pointer;
+
+      &:hover {
+        #{$item}-icon {
+          background-color: #f2f2f2;
+          border-color: #f2f2f2;
+        }
+        svg {
+          opacity: 0.3;
+
+          path {
+            stroke: #000;
+          }
+        }
+      }
+    }
+
+    &-icon {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      border: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        opacity: 0;
+      }
+    }
+
+    &-checkbox:checked + label &-icon {
+      background-color: var(--color-base-green);
+      border-color: var(--color-base-green);
+
+      svg {
+        opacity: 1;
+
+        path {
+          stroke: #fff;
+        }
+      }
+    }
+  }
+}

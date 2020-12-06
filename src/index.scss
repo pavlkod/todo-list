@@ -36,6 +36,7 @@ body {
   border: 1px solid #f1f1f1;
   overflow: hidden;
   border-radius: var(--border-radius);
+  display: flex;
 
   &__sidebar {
     background-color: #f4f6f8;
@@ -43,6 +44,15 @@ body {
     height: 100%;
     border-right: 1px solid #f1f1f1;
     padding: 48px 20px;
+  }
+
+  &__tasks {
+    flex: 1;
+    padding: 60px;
+
+    h2 {
+      font-size: 2em;
+    }
   }
 }
 
