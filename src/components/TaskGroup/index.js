@@ -1,29 +1,27 @@
 // import React from 'react';
-import classnames from "classnames";
+import cx from "classnames";
 
 import "./index.scss";
 import removeSvg from "../../assets/img/remove.svg";
 import Badge from "../Badge";
 
-const TaskGroup = ({ items, removable, showPopup }) => {
+const TaskGroup = ({ items, removable, toggleVisiblePopup }) => {
   if (!items.length) {
     return null;
   }
 
-  const showPopupHandler = event => {
-    console.log(123);
-    showPopup();
-  };
+  const toggleVisibleHandler = event => toggleVisiblePopup && toggleVisiblePopup();
+
   return (
-    <ul className="task-group" onClick={showPopupHandler}>
+    <ul className="task-group" onClick={toggleVisibleHandler}>
       {items.map(task => {
         return (
           <li
-            className={classnames(task.className, "task-group__item", { "task-group__item--active": task.active })}
-            key={task.label}
+            className={cx(task.className, "task-group__item", { "task-group__item--active": task.active })}
+            key={task.id}
           >
-            <i className="task-group__item-icon">{task.icon ? task.icon : <Badge color={task.color} />}</i>
-            <span>{task.label}</span>
+            <i className="task-group__item-icon">{task.icon ? task.icon : <Badge bgcolor={task.hex} />}</i>
+            <span>{task.name}</span>
             {removable && (
               <span className="task-group__item-remove">
                 <img src={removeSvg} alt="remove" />

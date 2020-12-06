@@ -1,32 +1,37 @@
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import TaskGroup from "./components/TaskGroup";
+
+import DB from "./assets/db.json";
 
 import { ReactComponent as ListSvg } from "./assets/img/list.svg";
 import { AddListButton } from "./components/AddListButton";
 
-import DB from "./assets/db.json";
+import { formatArray } from "./utils";
 
 function App() {
-  const allTasks = [
+  const [tasks, setTasks] = useState(() => formatArray(DB.lists, DB.colors));
+
+  const allItemsTask = [
     {
-      label: "Список задач",
+      name: "Список задач",
       icon: <ListSvg />,
       active: true,
+      id: uuidv4(),
     },
   ];
-  const tasks = [
-    { label: "Покупки", color: "dark-green" },
-    { label: "Фронтенд", color: "blue" },
-    { label: "Фильмы и сериалы", color: "pink" },
-    { label: "Книги", color: "green" },
-    { label: "Личное", color: "grey" },
-  ];
+
+  const addTaskHandler = task => {
+    setTasks(state => [...tasks, task]);
+  };
 
   return (
     <div className="todo">
       <div className="todo__sidebar">
-        <TaskGroup items={allTasks} />
+        <TaskGroup items={allItemsTask} />
         <TaskGroup items={tasks} removable />
-        <AddListButton colors={DB.colors} />
+        <AddListButton colors={DB.colors} addTask={addTaskHandler} />
       </div>
       <div className="todo_tasks"></div>
     </div>
