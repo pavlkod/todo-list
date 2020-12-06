@@ -26,11 +26,17 @@ function App() {
     setTasks(state => [...tasks, task]);
   };
 
+  const removeTaskHandler = index => {
+    const items = [...tasks];
+    items.splice(index, 1);
+    setTasks(items);
+  };
+
   return (
     <div className="todo">
       <div className="todo__sidebar">
         <TaskGroup items={allItemsTask} />
-        <TaskGroup items={tasks} removable />
+        <TaskGroup items={tasks} removable topAlign removeTask={removeTaskHandler} />
         <AddListButton colors={DB.colors} addTask={addTaskHandler} />
       </div>
       <div className="todo_tasks"></div>

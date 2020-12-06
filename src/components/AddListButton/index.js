@@ -23,9 +23,20 @@ const AddListButton = ({ colors, addTask }) => {
     },
   ];
 
-  const toggleVisiblePopupHandler = () => setVisiblePopup(!visiblePopup);
+  const toggleVisiblePopupHandler = () => {
+    setVisiblePopup(!visiblePopup);
+    clearInfo();
+  };
+  const closeAddTaskPopup = () => {
+    setVisiblePopup(false);
+    clearInfo();
+  };
+  const clearInfo = () => {
+    setInputValue("");
+    setActiveColor(1);
+  };
+
   const setActiveColor = id => setSelectedColor(id);
-  const closeAddTaskPopup = () => setVisiblePopup(false);
   const changeInputValueHandler = e => setInputValue(e.target.value);
 
   const addTaskHander = () => {
@@ -33,12 +44,15 @@ const AddListButton = ({ colors, addTask }) => {
       alert("Введите название списка");
       return;
     }
+
     const task = {
       name: inputValue,
       hex: getHexByColorID(selectedColor, colors),
       id: uuidv4(),
     };
     addTask(task);
+
+    closeAddTaskPopup();
   };
 
   return (
