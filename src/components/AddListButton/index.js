@@ -3,17 +3,21 @@ import { v4 as uuidv4 } from "uuid";
 
 import { ReactComponent as AddSvg } from "../../assets/img/add.svg";
 import { ReactComponent as CloseSvg } from "../../assets/img/close.svg";
+import { useTaskColors } from "../../hooks/TaskColors/useTaskColors";
 import { getHexByColorID } from "../../utils";
+import { http } from "../../utils/axios";
 
 import Badge from "../Badge";
 import TaskGroup from "../TaskGroup";
 
 import "./index.scss";
 
-const AddListButton = ({ colors, addTask }) => {
+const AddListButton = ({ addTask }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const [selectedColor, setSelectedColor] = useState(1);
   const [inputValue, setInputValue] = useState("");
+
+  const { isLoading, setIsLoading, colors, selectedColor, setSelectedColor } = useTaskColors();
+
   const items = [
     {
       name: "Добавить задачу",
@@ -47,12 +51,22 @@ const AddListButton = ({ colors, addTask }) => {
 
     const task = {
       name: inputValue,
-      hex: getHexByColorID(selectedColor, colors),
+      // hex: getHexByColorID(selectedColor, colors),
+      colorId: selectedColor,
       id: uuidv4(),
     };
-    addTask(task);
 
-    closeAddTaskPopup();
+    setIsLoading(true);
+
+    http
+      .post("/lists", task)
+      .then(({ data }) => {
+        addTask({ ...data, color: { hex: getHexByColorID(selectedColor, colors) } });
+      })
+      .finally(() => {
+        closeAddTaskPopup();
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -81,9 +95,15 @@ const AddListButton = ({ colors, addTask }) => {
                 />
               ))}
             </div>
-            <button className="btn font_14 add-list__popup-btn" onClick={addTaskHander}>
-              Добавить
-            </button>
+            {isLoading ? (
+              <button className="btn font_14 add-list__popup-btn" disabled>
+                Добавление...
+              </button>
+            ) : (
+              <button className="btn font_14 add-list__popup-btn" onClick={addTaskHander}>
+                Добавить
+              </button>
+            )}
           </div>
         </div>
       )}

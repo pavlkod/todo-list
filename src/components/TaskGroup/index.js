@@ -1,9 +1,13 @@
 // import React from 'react';
 import cx from "classnames";
 
-import "./index.scss";
 import { ReactComponent as RemoveSvg } from "../../assets/img/remove.svg";
+
+import { http } from "../../utils/axios";
+
 import Badge from "../Badge";
+
+import "./index.scss";
 
 const TaskGroup = ({ items, removable = false, toggleVisiblePopup, topAlign = false, removeTask }) => {
   if (!items.length) {
@@ -11,9 +15,10 @@ const TaskGroup = ({ items, removable = false, toggleVisiblePopup, topAlign = fa
   }
 
   const toggleVisibleHandler = () => toggleVisiblePopup && toggleVisiblePopup();
-  const removeTaskHandler = index => {
+  const removeTaskHandler = id => {
     if (window.confirm("Вы действительно хотите удалить категорию?")) {
-      removeTask(index);
+      http.delete(`/lists/${id}`);
+      removeTask(id);
     }
   };
 
@@ -25,10 +30,10 @@ const TaskGroup = ({ items, removable = false, toggleVisiblePopup, topAlign = fa
             className={cx(task.className, "task-group__item", { "task-group__item--active": task.active })}
             key={task.id}
           >
-            <i className="task-group__item-icon">{task.icon ? task.icon : <Badge bgcolor={task.hex} />}</i>
+            <i className="task-group__item-icon">{task.icon ? task.icon : <Badge bgcolor={task.color.hex} />}</i>
             <span className="task-group__item-title">{task.name}</span>
             {removable && (
-              <span className="task-group__item-remove" title="Удалить" onClick={removeTaskHandler.bind(null, index)}>
+              <span className="task-group__item-remove" title="Удалить" onClick={removeTaskHandler.bind(null, task.id)}>
                 <RemoveSvg />
               </span>
             )}

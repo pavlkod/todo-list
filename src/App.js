@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-import TaskGroup from "./components/TaskGroup";
-
-import DB from "./assets/db.json";
 
 import { ReactComponent as ListSvg } from "./assets/img/list.svg";
 import { AddListButton } from "./components/AddListButton";
 
-import { formatArray } from "./utils";
+import { http } from "./utils/axios";
+
+import TaskGroup from "./components/TaskGroup";
 import Tasks from "./components/Tasks";
 
 function App() {
-  const [tasks, setTasks] = useState(() => formatArray(DB.lists, DB.colors));
+  const [isLoadingTasks, setIsLoadingTasks] = useState(true);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    http.get("/lists?_expand=color").then(({ data }) => {
+      setTasks(data);
+      setIsLoadingTasks(false);
+    });
+  }, []);
 
   const allItemsTask = [
     {
@@ -24,7 +30,7 @@ function App() {
   ];
 
   const addTaskHandler = task => {
-    setTasks(state => [...tasks, task]);
+    setTasks([...tasks, task]);
   };
 
   const removeTaskHandler = index => {
@@ -37,8 +43,13 @@ function App() {
     <div className="todo">
       <div className="todo__sidebar">
         <TaskGroup items={allItemsTask} />
-        <TaskGroup items={tasks} removable topAlign removeTask={removeTaskHandler} />
-        <AddListButton colors={DB.colors} addTask={addTaskHandler} />
+
+        {isLoadingTasks && <p>Загрузка задач...</p>}
+        {tasks.length > 0 && !isLoadingTasks && (
+          <TaskGroup items={tasks} removable topAlign removeTask={removeTaskHandler} />
+        )}
+
+        <AddListButton addTask={addTaskHandler} />
       </div>
       <div className="todo__tasks">
         <Tasks title="Фронтенд" />

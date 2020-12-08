@@ -30,7 +30,7 @@ body {
 
 .todo {
   width: 750px;
-  height: 530px;
+  min-height: 530px;
   margin: 50px auto;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
   border: 1px solid #f1f1f1;
@@ -103,5 +103,11 @@ body {
   }
   &:active {
     background: var(--color-base-green-active);
+  }
+  &:disabled {
+    background: #fff;
+    border-color: #000;
+    color: #000;
+    cursor: default;
   }
 }
