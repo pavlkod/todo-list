@@ -9,16 +9,23 @@ import Badge from "../Badge";
 
 import "./index.scss";
 
-const TaskGroup = ({ items, removable = false, toggleVisiblePopup, topAlign = false, removeTask }) => {
+const TaskGroup = ({
+  items,
+  removable = false,
+  toggleVisiblePopup,
+  topAlign = false,
+  removeTask,
+  openTasksGroup,
+  activeItem,
+}) => {
   if (!items.length) {
     return null;
   }
 
   const toggleVisibleHandler = () => toggleVisiblePopup && toggleVisiblePopup();
-  const removeTaskHandler = id => {
+  const removeTaskHandler = (id, index) => {
     if (window.confirm("Вы действительно хотите удалить категорию?")) {
-      http.delete(`/lists/${id}`);
-      removeTask(id);
+      http.delete(`/lists/${id}`).then(() => removeTask(index));
     }
   };
 
@@ -27,13 +34,23 @@ const TaskGroup = ({ items, removable = false, toggleVisiblePopup, topAlign = fa
       {items.map((task, index) => {
         return (
           <li
-            className={cx(task.className, "task-group__item", { "task-group__item--active": task.active })}
+            className={cx(task.className, "task-group__item", {
+              "task-group__item--active": activeItem?.id === task.id,
+            })}
             key={task.id}
+            onClick={openTasksGroup ? openTasksGroup.bind(null, task) : null}
           >
             <i className="task-group__item-icon">{task.icon ? task.icon : <Badge bgcolor={task.color.hex} />}</i>
-            <span className="task-group__item-title">{task.name}</span>
+            <span className="task-group__item-title">
+              {task.name}
+              {task.tasks?.length > 0 && ` (${task.tasks.length})`}
+            </span>
             {removable && (
-              <span className="task-group__item-remove" title="Удалить" onClick={removeTaskHandler.bind(null, task.id)}>
+              <span
+                className="task-group__item-remove"
+                title="Удалить"
+                onClick={removeTaskHandler.bind(null, task.id, index)}
+              >
                 <RemoveSvg />
               </span>
             )}

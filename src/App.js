@@ -10,13 +10,14 @@ import TaskGroup from "./components/TaskGroup";
 import Tasks from "./components/Tasks";
 
 function App() {
-  const [isLoadingTasks, setIsLoadingTasks] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
+  const [activeItem, setActiveItem] = useState(null);
 
   useEffect(() => {
-    http.get("/lists?_expand=color").then(({ data }) => {
+    http.get("/lists?_expand=color&_embed=tasks").then(({ data }) => {
       setTasks(data);
-      setIsLoadingTasks(false);
+      setIsLoading(false);
     });
   }, []);
 
@@ -39,20 +40,33 @@ function App() {
     setTasks(items);
   };
 
+  const openTasksGroupHandler = task => {
+    console.log(task);
+    setActiveItem(task);
+  };
+
   return (
     <div className="todo">
       <div className="todo__sidebar">
         <TaskGroup items={allItemsTask} />
 
-        {isLoadingTasks && <p>Загрузка задач...</p>}
-        {tasks.length > 0 && !isLoadingTasks && (
-          <TaskGroup items={tasks} removable topAlign removeTask={removeTaskHandler} />
+        {isLoading && <p style={{ marginBottom: "20px" }}>Загрузка задач...</p>}
+        {tasks.length > 0 && !isLoading && (
+          <TaskGroup
+            items={tasks}
+            removable
+            topAlign
+            removeTask={removeTaskHandler}
+            openTasksGroup={openTasksGroupHandler}
+            activeItem={activeItem}
+          />
         )}
 
         <AddListButton addTask={addTaskHandler} />
       </div>
       <div className="todo__tasks">
-        <Tasks title="Фронтенд" />
+        {isLoading && <p>Загрузка задач...</p>}
+        {tasks.length > 0 && !isLoading && <Tasks items={tasks[0]} />}
       </div>
     </div>
   );
