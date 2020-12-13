@@ -41,8 +41,16 @@ function App() {
   };
 
   const openTasksGroupHandler = task => {
-    console.log(task);
     setActiveItem(task);
+  };
+  const onEditTitleHandler = (id, name) => {
+    const items = [...tasks].map(item => {
+      if (item.id === id) {
+        item["name"] = name;
+      }
+      return item;
+    });
+    setTasks(items);
   };
 
   return (
@@ -66,7 +74,7 @@ function App() {
       </div>
       <div className="todo__tasks">
         {isLoading && <p>Загрузка задач...</p>}
-        {tasks.length > 0 && !isLoading && <Tasks items={tasks[0]} />}
+        {tasks.length > 0 && !isLoading && <Tasks items={activeItem ?? tasks[0]} onEditTitle={onEditTitleHandler} />}
       </div>
     </div>
   );

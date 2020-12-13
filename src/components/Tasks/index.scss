@@ -6,6 +6,7 @@
     font-family: Montserrat, sans-serif;
     padding-bottom: 0.625em;
     border-bottom: 1px solid #f2f2f2;
+    margin-bottom: 1.2em;
 
     &:hover {
       #{$title}-icon {
@@ -38,6 +39,7 @@
       position: relative;
       padding-left: 35px;
       cursor: pointer;
+      display: block;
 
       &:hover {
         #{$item}-icon {
@@ -86,4 +88,15 @@
       }
     }
   }
+}
+.tasks-empty {
+  color: #c9d1d3;
+  font-size: 2em;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
