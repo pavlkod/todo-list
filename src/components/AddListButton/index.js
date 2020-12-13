@@ -51,7 +51,6 @@ const AddListButton = ({ addTask }) => {
 
     const task = {
       name: inputValue,
-      // hex: getHexByColorID(selectedColor, colors),
       colorId: selectedColor,
       id: uuidv4(),
     };
@@ -85,16 +84,18 @@ const AddListButton = ({ addTask }) => {
               placeholder="Название списка"
               className="form-control"
             />
-            <div className="add-list__popup-colors">
-              {colors.map((color, i) => (
-                <Badge
-                  onClick={setActiveColor.bind(null, color.id)}
-                  isActive={selectedColor === color.id}
-                  key={color.id}
-                  bgcolor={color.hex}
-                />
-              ))}
-            </div>
+            {colors.length > 0 && (
+              <div className="add-list__popup-colors">
+                {colors.map((color, i) => (
+                  <Badge
+                    onClick={setActiveColor.bind(null, color.id)}
+                    isActive={selectedColor === color.id}
+                    key={color.id}
+                    bgcolor={color.hex}
+                  />
+                ))}
+              </div>
+            )}
             {isLoading ? (
               <button className="btn font_14 add-list__popup-btn" disabled>
                 Добавление...

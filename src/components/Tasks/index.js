@@ -3,25 +3,27 @@ import { ReactComponent as EditSvg } from "../../assets/img/edit.svg";
 import { ReactComponent as CheckSvg } from "../../assets/img/check.svg";
 import "./index.scss";
 
-const Tasks = ({ title }) => {
+const Tasks = ({ items: { name, tasks } }) => {
   return (
     <div className="tasks">
       <h2 className="tasks__title">
-        {title}
+        {name}
         <div className="tasks__title-icon">
           <EditSvg />
         </div>
       </h2>
       <div className="tasks__list">
-        <div className="tasks__item">
-          <input type="checkbox" className="tasks__item-checkbox" id="1" />
-          <label htmlFor="1">
-            <span>Text</span>
-            <span className="tasks__item-icon">
-              <CheckSvg />
-            </span>
-          </label>
-        </div>
+        {tasks.map(item => (
+          <div className="tasks__item" key={item.id}>
+            <input type="checkbox" className="tasks__item-checkbox" id={item.id} />
+            <label htmlFor={item.id}>
+              <span>{item.text}</span>
+              <span className="tasks__item-icon">
+                <CheckSvg />
+              </span>
+            </label>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiHost = " http://localhost:3001";
+const apiHost = process.env.REACT_APP_HOST || "/";
 const http = axios.create({
   baseURL: apiHost,
   //   timeout: 1000,
